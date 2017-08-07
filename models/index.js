@@ -13,7 +13,7 @@ const Page = db.define('page', {
     urlTitle: { type: Sequelize.STRING, allowNull: false },
     content: { type: Sequelize.TEXT, allowNull: false },
     status: Sequelize.ENUM('open', 'closed'),
-    date: { type: Sequelize.DATE, defaultValue: Sequelize.NOW }
+    date: { type: Sequelize.DATE, defaultValue: Sequelize.NOW },
 },
     {
         getterMethods: {
@@ -25,9 +25,10 @@ const Page = db.define('page', {
 );
 
 Page.hook('beforeValidate', (page, options) => {
-    page.urlTitle = generateUrlTitle(Page.title);
+    page.urlTitle = generateUrlTitle(page.title);
 });
 
+Page.belongsTo(User);
 
 module.exports = {
     Page: Page,
