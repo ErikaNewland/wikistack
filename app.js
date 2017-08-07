@@ -22,12 +22,6 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true })); // for HTML form submits
 app.use(bodyParser.json()); // would be for AJAX requests
 
-
-// start the server
-// var server = app.listen(1337, function () {
-//   console.log('listening on port 1337');
-// });
-
 //sync each table and then 
 // models.User.sync({})
 //     .then(()=>{
@@ -51,7 +45,7 @@ models.db.sync({force: true})
 
 app.use(express.static(path.join(__dirname, '/public')));
 
-// modular routing that uses io inside it
+// modular routing 
 app.use('/', router);
 
 

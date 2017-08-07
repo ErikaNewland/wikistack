@@ -14,7 +14,8 @@ const Page = db.define('page', {
     content: {type: Sequelize.TEXT,allowNull: false},
     status: Sequelize.ENUM('open', 'closed'),
     date: {type: Sequelize.DATE, defaultValue: Sequelize.NOW}
-}, {
+},
+{
     getterMethods: {
         route() {
             return '/wiki/${this.urlTitle}'
@@ -27,3 +28,7 @@ module.exports={
     User: User,
     db: db
 };
+
+function setUrlTitle(title){
+    title.replace(/ /, '%20');
+}
