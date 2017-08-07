@@ -6,7 +6,9 @@ var nunjucks = require('nunjucks');
 var router = require('./routes');
 var fs = require('fs');
 var bodyParser = require('body-parser');
-var path=require('path')
+var path = require('path');
+var models = require('./models');
+
 
 // templating boilerplate setup
 var env = nunjucks.configure('views', { noCache: true }); // where to find the views, caching off
@@ -22,9 +24,30 @@ app.use(bodyParser.json()); // would be for AJAX requests
 
 
 // start the server
-var server = app.listen(1337, function () {
-  console.log('listening on port 1337');
-});
+// var server = app.listen(1337, function () {
+//   console.log('listening on port 1337');
+// });
+
+//sync each table and then 
+// models.User.sync({})
+//     .then(()=>{
+//         return models.Page.sync({})
+//     })
+//     .then(()=>app.listen(1337, function () {
+//     console.log('listening on port 1337')
+//     }))
+//     .catch(console.error);
+
+//sync entire database and then start the server
+models.db.sync({force: true})
+    .then(() => {
+        app.listen(1337, function () {
+            console.log('listening on port 1337');
+        })
+    })
+    .catch(console.error);
+
+
 
 app.use(express.static(path.join(__dirname, '/public')));
 
