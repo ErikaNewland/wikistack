@@ -20,8 +20,12 @@ wikiRouter.post('/', function(req, res, next){
         content: content
     });
 
-    page.save();
-    res.redirect('/');
+    page.save()
+        .then((newPage)=>{
+            res.json(newPage);
+        })
+        .catch(console.log);
+    //res.redirect('/');
 });
 
 wikiRouter.get('/add', function(req, res, next){
